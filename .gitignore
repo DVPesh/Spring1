@@ -54,6 +54,7 @@ out/
 homework1/target
 homework2/target
 homework3/target
+homework4/target
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
