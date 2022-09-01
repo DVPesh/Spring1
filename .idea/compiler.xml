@@ -12,6 +12,7 @@
         <module name="homework2" />
         <module name="homework5" />
         <module name="homework4" />
+        <module name="homework6" />
       </profile>
     </annotationProcessing>
   </component>
