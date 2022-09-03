@@ -13,7 +13,7 @@ import ru.peshekhonov.products.Product;
 import ru.peshekhonov.products.ProductRepository;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
+import java.math.BigDecimal;
 
 @Slf4j
 @Controller
@@ -24,8 +24,12 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    public String productList(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+    public String productList(@RequestParam(required = false) String titleFilter,
+                              @RequestParam(required = false) BigDecimal minCost,
+                              @RequestParam(required = false) BigDecimal maxCost,
+                              Model model) {
+        titleFilter = titleFilter == null || titleFilter.isBlank() ? null : "%" + titleFilter.trim() + "%";
+        model.addAttribute("products", productRepository.productsByFilter(titleFilter, minCost, maxCost));
         return "products";
     }
 
@@ -76,7 +80,7 @@ public class ProductController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictExceptionHandler(Model model, SQLException e) {
+    public String conflictExceptionHandler(Model model, Exception e) {
         model.addAttribute("message", e.getMessage());
         return "error";
     }
