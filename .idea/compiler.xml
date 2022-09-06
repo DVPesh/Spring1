@@ -13,6 +13,7 @@
         <module name="homework5" />
         <module name="homework4" />
         <module name="homework7" />
+        <module name="homework6" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
