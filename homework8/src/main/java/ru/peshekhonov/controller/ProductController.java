@@ -30,9 +30,10 @@ public class ProductController {
                               @RequestParam(required = false) BigDecimal maxCost,
                               @RequestParam(required = false) Optional<Integer> page,
                               @RequestParam(required = false) Optional<Integer> size,
+                              @RequestParam(required = false) Optional<String> sortField,
                               Model model) {
         model.addAttribute("products", productService.findAllByFilter(titleFilter, minCost, maxCost,
-                page.orElse(1) - 1, size.orElse(3)));
+                page.orElse(1) - 1, size.orElse(3), sortField.filter(s -> !s.isBlank()).orElse("id")));
         return "products";
     }
 
