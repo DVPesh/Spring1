@@ -58,6 +58,7 @@ homework4/target
 homework5/target
 homework6/target
 homework7/target
+homework8/target
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

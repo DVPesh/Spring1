@@ -15,15 +15,24 @@
         <module name="homework7" />
         <module name="homework6" />
       </profile>
+      <profile name="Annotation profile for Spring1" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.2.Final/mapstruct-processor-1.5.2.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.2.Final/mapstruct-1.5.2.Final.jar" />
+        </processorPath>
+        <module name="homework8" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="homework6" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="homework4" options="-parameters" />
       <module name="homework7" options="-parameters" />
+      <module name="homework8" options="-parameters" />
     </option>
   </component>
 </project>
