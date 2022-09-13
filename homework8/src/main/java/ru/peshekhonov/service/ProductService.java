@@ -28,8 +28,8 @@ public class ProductService {
         return productRepository.findById(id).map(mapper::map);
     }
 
-    public void save(ProductDto productDto) {
-        productRepository.save(mapper.map(productDto));
+    public ProductDto save(ProductDto productDto) {
+        return mapper.map(productRepository.save(mapper.map(productDto)));
     }
 
     public void deleteProductById(Long id) {
