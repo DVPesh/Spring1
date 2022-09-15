@@ -1,0 +1,32 @@
+<div class="row py-2">
+  <div class="col-12">
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+    <form (ngSubmit)="update()">
+      <div class="form-group">
+        <label>наименование</label>
+        <input [(ngModel)]="product.title" type="text" class="form-control" id="title" name="title"
+               placeholder="введите название товара">
+
+        <label>цена</label>
+        <input [(ngModel)]="product.cost" type="text" class="form-control" id="cost" name="cost"
+               placeholder="введите цену товара">
+
+        <label>срок годности</label>
+        <input [(ngModel)]="product.expirationDate" type="text" class="form-control" id="expiration-date"
+               name="expiration-date" placeholder="2022-12-01">
+
+        <label>Email поставщика</label>
+        <input [(ngModel)]="product.supplierEmail" type="text" class="form-control" id="supplier-email"
+               name="supplier-email" placeholder="supplier@mail.ru">
+
+        <label>количество</label>
+        <input [(ngModel)]="product.quantity" type="text" class="form-control" id="quantity" name="quantity"
+               placeholder="введите количество упаковок товара">
+
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
