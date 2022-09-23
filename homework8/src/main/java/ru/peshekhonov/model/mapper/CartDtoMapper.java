@@ -3,14 +3,14 @@ package ru.peshekhonov.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
-import ru.peshekhonov.model.Role;
-import ru.peshekhonov.model.dto.RoleDto;
+import ru.peshekhonov.model.Cart;
+import ru.peshekhonov.model.dto.CartDto;
 
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-public interface RoleDtoMapper {
+public interface CartDtoMapper {
 
-    RoleDto map(Role role);
+    CartDto map(Cart cart);
 
-    @Mapping(target = "visitors", ignore = true)
-    Role map(RoleDto roleDto);
+    @Mapping(target = "items", ignore = true)
+    Cart map(CartDto cartDto);
 }

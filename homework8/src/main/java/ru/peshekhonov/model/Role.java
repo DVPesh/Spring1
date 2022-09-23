@@ -1,9 +1,11 @@
 package ru.peshekhonov.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,7 +27,7 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "visitor_id")
     )
-    private List<Visitor> visitors;
+    private Set<Visitor> visitors;
 
     public Role(String name) {
         this.name = name;

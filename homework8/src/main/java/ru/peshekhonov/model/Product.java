@@ -7,10 +7,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
+@Entity
 @Setter
 @Getter
-@Entity
 @NoArgsConstructor
 @Table(name = "products")
 public class Product {
@@ -33,6 +34,9 @@ public class Product {
 
     @Column(nullable = false)
     private long quantity;
+
+    @OneToMany(mappedBy = "product")
+    private Set<Item> items;
 
     public Product(String title, BigDecimal cost, LocalDate expirationDate, String supplierEmail, long quantity) {
         this.title = title;
