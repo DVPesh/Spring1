@@ -1,0 +1,10 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th th:fragment="table_sort(title, field)" scope="col">[[${title}]]
+    <a th:href="@{/visitor(usernameFilter=${param.usernameFilter},role=${param.role},
+                           page=${param.page},size=${param.size},sortField=${field})}">
+        <i class="fa fa-sort-down"></i>
+    </a>
+</th>
+
+</html>

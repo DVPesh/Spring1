@@ -40,12 +40,12 @@
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
-                    <th th:replace="fragments/sort_header.html::table_sort('идентификатор', 'id')"></th>
-                    <th th:replace="fragments/sort_header.html::table_sort('наименование', 'title')"></th>
-                    <th th:replace="fragments/sort_header.html::table_sort('цена', 'cost')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('идентификатор', 'id')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('наименование', 'title')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('цена', 'cost')"></th>
                     <th scope="col">срок годности</th>
                     <th scope="col">Email поставщика</th>
-                    <th th:replace="fragments/sort_header.html::table_sort('количество упаковок', 'quantity')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('количество упаковок', 'quantity')"></th>
                     <th scope="col">действия</th>
                 </tr>
                 </thead>

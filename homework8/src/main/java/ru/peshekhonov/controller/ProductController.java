@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.peshekhonov.exceptions.ProductNotFoundException;
+import ru.peshekhonov.exceptions.EntityNotFoundException;
 import ru.peshekhonov.model.dto.ProductDto;
 import ru.peshekhonov.service.ProductService;
 
@@ -40,7 +40,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public String productForm(@PathVariable long id, Model model) {
         model.addAttribute("product", productService.findProductById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Товар не найден")));
+                .orElseThrow(() -> new EntityNotFoundException("Товар не найден")));
         return "product_form";
     }
 
@@ -77,7 +77,7 @@ public class ProductController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundExceptionHandler(Model model, ProductNotFoundException e) {
+    public String notFoundExceptionHandler(Model model, EntityNotFoundException e) {
         model.addAttribute("message", e.getMessage());
         return "error";
     }

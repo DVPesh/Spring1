@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html::head">
+</head>
+
+<body>
+
+<nav th:replace="fragments/head.html::navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/visitor}" method="post" th:object="${visitor}">
+                <input th:field="*{id}" type="hidden" id="id" name="id">
+                <div class="form-group">
+                    <label>имя пользователя</label>
+                    <input th:field="*{username}" type="text" class="form-control" id="username" name="username"
+                           placeholder="введите имя пользователя">
+                    <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    <label>номер телефона</label>
+                    <input th:field="*{phoneNumber}" type="text" class="form-control" id="phone_number"
+                           name="phoneNumber"
+                           placeholder="введите номер телефона">
+                    <p class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                    <label>пароль</label>
+                    <input th:field="*{password}" type="password" class="form-control" id="password"
+                           name="password" placeholder="введите пароль">
+                    <p class="text-danger" th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"></p>
+                    <label>повтор пароля</label>
+                    <input th:field="*{matchingPassword}" type="password" class="form-control" id="matching_password"
+                           name="matchingPassword" placeholder="введите пароль ещё раз">
+                    <p class="text-danger" th:if="${#fields.hasErrors('matchingPassword')}"
+                       th:errors="*{matchingPassword}"></p>
+                    <label>роли</label>
+                    <select th:field="*{roles}" class="form-control" id="roles" multiple>
+                        <option th:each="role : ${roles}"
+                                th:text="${role!=null?role.getName().substring(5):null}"
+                                th:value="${role!=null?role.getId():null}"
+                                th:selected="${visitor.getRoles()?.contains(role)}"
+                        ></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer.html::scripts"></th:block>
+</body>
+
+</html>

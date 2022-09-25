@@ -11,8 +11,6 @@ public interface VisitorDtoMapper {
     @Mapping(target = "password", ignore = true)
     VisitorDto map(Visitor visitor);
 
-    @Mapping(target = "roles", ignore = true)
-    @Mapping(target = "carts", ignore = true)
     @Mapping(source = "password", target = "password", qualifiedByName = "encode")
     Visitor map(VisitorDto visitorDto, @Context PasswordEncoder encoder);
 

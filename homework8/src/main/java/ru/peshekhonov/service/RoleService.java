@@ -9,6 +9,7 @@ import ru.peshekhonov.repository.RoleRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,19 @@ public class RoleService {
     @Transactional
     public List<RoleDto> findAll() {
         return roleRepository.findAll().stream().map(mapper::map).toList();
+    }
+
+    @Transactional
+    public List<RoleDto> findAllAndAddNull() {
+        List<RoleDto> roles = roleRepository.findAll().stream().map(mapper::map).collect(Collectors.toList());
+        roles.add(null);
+        return roles;
+    }
+
+    public List<String> findAllNames() {
+        List<String> roleNames = findAll().stream().map(r -> r.getName().substring(5)).collect(Collectors.toList());
+        roleNames.add(0, null);
+        return roleNames;
     }
 
     @Transactional

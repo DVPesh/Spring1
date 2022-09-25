@@ -28,8 +28,4 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "visitor_id")
     )
     private Set<Visitor> visitors;
-
-    public Role(String name) {
-        this.name = name;
-    }
 }

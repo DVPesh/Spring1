@@ -15,26 +15,25 @@ public interface VisitorRepository extends JpaRepository<Visitor, Long> {
     Optional<Visitor> findByUsername(String username);
 
     @Query(value = """
-            select *
-            from visitors v
+            select distinct v.*
+            from visitors as v
+                     left join visitors_roles as vr
+                          on v.id = vr.visitor_id
+                     left join roles r
+                          on vr.role_id = r.id
             where (:username is null or v.username like :username)
-              and (:role is null or v.id in
-                                    (select vr.visitor_id
-                                     from visitors_roles vr
-                                              join roles r
-                                                   on vr.role_id = r.id
-                                     where r.name = :role))
-                                                """,
+              and (:role is null or r.name = :role)
+                        """,
             countQuery = """
-                                select count(*)
-                                from visitors v
-                                where (:username is null or v.username like :username)
-                                  and (:role is null or v.id in
-                                                        (select vr.visitor_id
-                                                         from visitors_roles vr
-                                                                  join roles r
-                                                                       on vr.role_id = r.id
-                                                         where r.name = :role))
+                    select count(*)
+                    from (select distinct v.*
+                          from visitors as v
+                                   left join visitors_roles as vr
+                                        on v.id = vr.visitor_id
+                                   left join roles r
+                                        on vr.role_id = r.id
+                          where (:username is null or v.username like :username)
+                            and (:role is null or r.name = :role)) as result
                     """,
             nativeQuery = true)
     Page<Visitor> visitorsByFilter(String username, String role, Pageable pageable);

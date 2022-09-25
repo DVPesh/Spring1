@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.peshekhonov.exceptions.ProductNotFoundException;
+import ru.peshekhonov.exceptions.EntityNotFoundException;
 import ru.peshekhonov.model.dto.ProductDto;
 import ru.peshekhonov.service.ProductService;
 
@@ -35,7 +35,7 @@ public class ProductRestController {
 
     @GetMapping("/{id}")
     public ProductDto productForm(@PathVariable long id) {
-        return productService.findProductById(id).orElseThrow(() -> new ProductNotFoundException("Товар не найден"));
+        return productService.findProductById(id).orElseThrow(() -> new EntityNotFoundException("Товар не найден"));
     }
 
     @GetMapping("/new")
@@ -61,7 +61,7 @@ public class ProductRestController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ProductErrorReport> notFoundExceptionHandler(ProductNotFoundException e) {
+    public ResponseEntity<ProductErrorReport> notFoundExceptionHandler(EntityNotFoundException e) {
         return new ResponseEntity<>(
                 new ProductErrorReport(HttpStatus.NOT_FOUND.value(), e.getMessage(), Timestamp.from(Instant.now())),
                 HttpStatus.NOT_FOUND);
