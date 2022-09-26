@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/head.html::head">
 </head>
@@ -11,7 +12,7 @@
 
 <div class="container">
     <div class="row py-2">
-        <div class="col-12">
+        <div class="col-12" sec:authorize="hasRole('MANAGER')">
             <a class="btn btn-primary" th:href="@{/product/new}">добавить продукт</a>
         </div>
 
@@ -64,9 +65,10 @@
                                    id="quantity" name="quantity">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button>
                         </form>
-                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
-                                class="fas fa-edit"></i></a>
-                        <form class="d-inline" th:method="delete" th:action="@{/product/{id}/(id = ${product.id})}">
+                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"
+                           sec:authorize="hasRole('MANAGER')"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/product/{id}/(id = ${product.id})}"
+                              sec:authorize="hasRole('MANAGER')">
                             <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>

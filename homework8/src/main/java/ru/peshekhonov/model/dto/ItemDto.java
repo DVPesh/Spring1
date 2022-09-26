@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.peshekhonov.model.Cart;
-import ru.peshekhonov.model.Product;
 
 import java.math.BigDecimal;
 

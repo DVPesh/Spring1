@@ -3,6 +3,7 @@ package ru.peshekhonov.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
     @Autowired
@@ -34,6 +36,8 @@ public class SecurityConfiguration {
                     .antMatchers("/**/*.css", "/**/*.js").permitAll()
                     .antMatchers("/").permitAll()
                     .antMatchers("/visitor/**").hasAnyRole("ADMIN", "SUPER")
+                    .antMatchers("/product/{id}").hasRole("MANAGER")
+                    .antMatchers("/product/new").hasRole("MANAGER")
                     .and()
                     .formLogin()
                     .successHandler((request, response, authentication) -> {
@@ -49,8 +53,6 @@ public class SecurityConfiguration {
                     .and()
                     .exceptionHandling()
                     .accessDeniedPage("/access_denied");
-
         }
     }
-
 }

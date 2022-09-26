@@ -3,6 +3,7 @@ package ru.peshekhonov.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class ProductController {
         return "products";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @GetMapping("/{id}")
     public String productForm(@PathVariable long id, Model model) {
         model.addAttribute("product", productService.findProductById(id)
@@ -46,18 +48,21 @@ public class ProductController {
         return "product_form";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @GetMapping("/new")
     public String addNewProduct(Model model) {
         model.addAttribute("product", new ProductDto());
         return "product_form";
     }
 
-    @DeleteMapping("{id}")
+    @Secured({"ROLE_MANAGER"})
+    @DeleteMapping("/{id}")
     public String deleteProductById(@PathVariable long id) {
         productService.deleteProductById(id);
         return "redirect:/product";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @PostMapping
     public String storeProduct(@Valid @ModelAttribute("product") ProductDto product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

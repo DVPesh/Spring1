@@ -52,7 +52,7 @@ public class VisitorController {
         return "visitor_form";
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public String deleteVisitorById(@PathVariable long id) {
         visitorService.deleteById(id);
         return "redirect:/visitor";
