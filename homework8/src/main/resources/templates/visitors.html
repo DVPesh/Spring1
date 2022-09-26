@@ -48,7 +48,6 @@
                     <th th:replace="fragments/visitor_sort_header.html::table_sort('имя пользователя', 'username')"></th>
                     <th th:replace="fragments/visitor_sort_header.html::table_sort('номер телефона', 'phone_number')"></th>
                     <th scope="col">роли</th>
-                    <th scope="col">количество корзин</th>
                     <th scope="col">действия</th>
                 </tr>
                 </thead>
@@ -57,7 +56,6 @@
                     <th scope="row" th:text="${visitor.username}">имя пользователя</th>
                     <td th:text="${visitor.phoneNumber}">номер телефона</td>
                     <td th:text="${visitor.getRoleNamesString()}">роли</td>
-                    <td th:text="${visitor.carts.size()}">количество корзин</td>
                     <td>
                         <a class="btn btn-success" th:href="@{/visitor/{id}(id = ${visitor.id})}"><i
                                 class="fas fa-edit"></i></a>

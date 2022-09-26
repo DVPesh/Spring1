@@ -16,12 +16,12 @@ import java.math.BigDecimal;
 public class ItemDto {
 
     private Long id;
-    private Product product;
+    private ProductDto product;
     private long quantity;
-    private Cart cart;
+    private CartDto cart;
     private BigDecimal cost;
 
-    public ItemDto(Product product, long quantity, Cart cart, BigDecimal cost) {
+    public ItemDto(ProductDto product, long quantity, CartDto cart, BigDecimal cost) {
         this.product = product;
         this.quantity = quantity;
         this.cart = cart;

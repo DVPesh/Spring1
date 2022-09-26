@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 import ru.peshekhonov.model.Cart;
 import ru.peshekhonov.model.Role;
 
@@ -35,7 +36,7 @@ public class VisitorDto {
 
     private Set<Role> roles;
 
-    private Set<Cart> carts;
+    private List<Cart> carts;
 
     public VisitorDto(String username, String phoneNumber, String password, String matchingPassword) {
         this.username = username;
@@ -44,6 +45,7 @@ public class VisitorDto {
         this.matchingPassword = matchingPassword;
     }
 
+    @Transactional
     public List<String> getRoleNames() {
         return roles.stream().map(r -> r.getName().substring(5)).toList();
     }

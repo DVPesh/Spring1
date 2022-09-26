@@ -16,10 +16,10 @@ import java.util.Set;
 public class CartDto {
 
     private Long id;
-    private Visitor visitor;
+    private VisitorDto visitor;
     private Set<Item> items;
 
-    public CartDto(Visitor visitor) {
+    public CartDto(VisitorDto visitor) {
         this.visitor = visitor;
     }
 }

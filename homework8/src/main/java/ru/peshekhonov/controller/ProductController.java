@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.peshekhonov.exceptions.EntityNotFoundException;
 import ru.peshekhonov.model.dto.ProductDto;
+import ru.peshekhonov.model.dto.QuantityItem;
 import ru.peshekhonov.service.ProductService;
 
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ public class ProductController {
                               Model model) {
         model.addAttribute("products", productService.findAllByFilter(titleFilter, minCost, maxCost,
                 page.orElse(1) - 1, size.orElse(3), sortField.filter(s -> !s.isBlank()).orElse("id")));
+        model.addAttribute("quantity", new QuantityItem());
         return "products";
     }
 

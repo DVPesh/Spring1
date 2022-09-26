@@ -57,7 +57,7 @@ public class VisitorService {
     }
 
     @Transactional
-    public User findByUsername(String username) {
+    public User findUserByUsername(String username) {
         return visitorRepository.findByUsername(username)
                 .map(v -> new User(
                         v.getUsername(),
@@ -68,5 +68,9 @@ public class VisitorService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public Optional<VisitorDto> findByUsername(String username) {
+        return visitorRepository.findByUsername(username).map(mapper::map);
     }
 }

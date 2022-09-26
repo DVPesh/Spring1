@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,7 +37,7 @@ public class Visitor {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "visitor")
-    private Set<Cart> carts;
+    private List<Cart> carts;
 
     public Visitor(String username, String phoneNumber, String password) {
         this.username = username;
