@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html::head">
+</head>
+
+<body>
+
+<nav th:replace="fragments/head.html::navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/visitor/new}">новый пользователь</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form class="form-inline">
+                <div class="form-group mb-2 mr-2">
+                    <label for="usernameFilter" class="sr-only">фильтр по имени пользователя</label>
+                    <input type="text" class="form-control" id="usernameFilter"
+                           name="usernameFilter" placeholder="имя пользователя" th:value="${param.usernameFilter}">
+                </div>
+                <!--                <div class="form-group mb-2 mr-2">-->
+                <!--                    <label for="role" class="sr-only">фильтр по роли</label>-->
+                <!--                    <input type="text" class="form-control" id="role"-->
+                <!--                           name="role" placeholder="роль" th:value="${param.role}">-->
+                <!--                </div>-->
+                <div class="form-group mb-2 mr-2">
+                    <label for="role" class="sr-only">фильтр по роли</label>
+                    <select class="form-control" id="role" name="role">
+                        <option th:each="role : ${roles}"
+                                th:text="${role}"
+                                th:value="${role}"
+                                th:selected="${param.role?.contains(role)}">
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">применить</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th th:replace="fragments/visitor_sort_header.html::table_sort('имя пользователя', 'username')"></th>
+                    <th th:replace="fragments/visitor_sort_header.html::table_sort('номер телефона', 'phone_number')"></th>
+                    <th scope="col">роли</th>
+                    <th scope="col">действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="visitor : ${visitors}">
+                    <th scope="row" th:text="${visitor.username}">имя пользователя</th>
+                    <td th:text="${visitor.phoneNumber}">номер телефона</td>
+                    <td th:text="${visitor.getRoleNamesString()}">роли</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/visitor/{id}(id = ${visitor.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/visitor/{id}/(id = ${visitor.id})}">
+                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:unless="${visitors.isEmpty()}" class="col-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${visitors.isFirst()} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/visitor(usernameFilter=${param.usernameFilter},role=${param.role},
+                           page=${visitors.number},size=${visitors.size},sortField=${param.sortField})}">
+                            Предыдущая
+                        </a>
+                    </li>
+
+                    <li th:each="num : ${#numbers.sequence(1,visitors.totalPages)}"
+                        th:classappend="${num == visitors.number + 1} ? 'active'"
+                        class="page-item">
+                        <a class="page-link"
+                           th:href="@{/visitor(usernameFilter=${param.usernameFilter},role=${param.role},
+                           page=${num},size=${visitors.size},sortField=${param.sortField})}">
+                            [[${num}]] <span th:if="${num == visitors.number + 1}" class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${visitors.isLast()} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/visitor(usernameFilter=${param.usernameFilter},role=${param.role},
+                           page=${visitors.number + 2},size=${visitors.size},sortField=${param.sortField})}">
+                            Следующая
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments/footer.html::scripts"></th:block>
+</body>
+</html>

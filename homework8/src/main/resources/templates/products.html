@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/head.html::head">
 </head>
@@ -11,7 +12,7 @@
 
 <div class="container">
     <div class="row py-2">
-        <div class="col-12">
+        <div class="col-12" sec:authorize="hasRole('MANAGER')">
             <a class="btn btn-primary" th:href="@{/product/new}">добавить продукт</a>
         </div>
 
@@ -40,12 +41,12 @@
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
-                    <th th:replace="fragments/sort_header.html::table_sort('идентификатор', 'id')"></th>
-                    <th th:replace="fragments/sort_header.html::table_sort('наименование', 'title')"></th>
-                    <th th:replace="fragments/sort_header.html::table_sort('цена', 'cost')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('идентификатор', 'id')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('наименование', 'title')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('цена', 'cost')"></th>
                     <th scope="col">срок годности</th>
                     <th scope="col">Email поставщика</th>
-                    <th th:replace="fragments/sort_header.html::table_sort('количество упаковок', 'quantity')"></th>
+                    <th th:replace="fragments/product_sort_header.html::table_sort('количество упаковок', 'quantity')"></th>
                     <th scope="col">действия</th>
                 </tr>
                 </thead>
@@ -58,9 +59,16 @@
                     <td th:text="${product.supplierEmail}"></td>
                     <td th:text="${product.quantity}"></td>
                     <td>
-                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
-                                class="fas fa-edit"></i></a>
-                        <form class="d-inline" th:method="delete" th:action="@{/product/{id}/(id = ${product.id})}">
+                        <form class="d-inline" th:method="put" th:action="@{/cart/{id}(id = ${product.id})}"
+                              th:object="${quantity}">
+                            <input th:field="*{value}" type="number" class="form-control" min="1" max="99"
+                                   id="quantity" name="quantity">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button>
+                        </form>
+                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"
+                           sec:authorize="hasRole('MANAGER')"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/product/{id}/(id = ${product.id})}"
+                              sec:authorize="hasRole('MANAGER')">
                             <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>

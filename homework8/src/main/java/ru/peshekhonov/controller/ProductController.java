@@ -3,13 +3,15 @@ package ru.peshekhonov.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.peshekhonov.exceptions.ProductNotFoundException;
+import ru.peshekhonov.exceptions.EntityNotFoundException;
 import ru.peshekhonov.model.dto.ProductDto;
+import ru.peshekhonov.model.dto.QuantityItem;
 import ru.peshekhonov.service.ProductService;
 
 import javax.validation.Valid;
@@ -34,28 +36,33 @@ public class ProductController {
                               Model model) {
         model.addAttribute("products", productService.findAllByFilter(titleFilter, minCost, maxCost,
                 page.orElse(1) - 1, size.orElse(3), sortField.filter(s -> !s.isBlank()).orElse("id")));
+        model.addAttribute("quantity", new QuantityItem());
         return "products";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @GetMapping("/{id}")
     public String productForm(@PathVariable long id, Model model) {
         model.addAttribute("product", productService.findProductById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Товар не найден")));
+                .orElseThrow(() -> new EntityNotFoundException("Товар не найден")));
         return "product_form";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @GetMapping("/new")
     public String addNewProduct(Model model) {
         model.addAttribute("product", new ProductDto());
         return "product_form";
     }
 
-    @DeleteMapping("{id}")
+    @Secured({"ROLE_MANAGER"})
+    @DeleteMapping("/{id}")
     public String deleteProductById(@PathVariable long id) {
         productService.deleteProductById(id);
         return "redirect:/product";
     }
 
+    @Secured({"ROLE_MANAGER"})
     @PostMapping
     public String storeProduct(@Valid @ModelAttribute("product") ProductDto product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -77,7 +84,7 @@ public class ProductController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundExceptionHandler(Model model, ProductNotFoundException e) {
+    public String notFoundExceptionHandler(Model model, EntityNotFoundException e) {
         model.addAttribute("message", e.getMessage());
         return "error";
     }

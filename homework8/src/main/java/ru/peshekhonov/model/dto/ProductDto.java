@@ -35,4 +35,12 @@ public class ProductDto {
 
     @Min(value = 1, message = "товар должен быть в наличии")
     private long quantity;
+
+    public ProductDto(String title, BigDecimal cost, LocalDate expirationDate, String supplierEmail, long quantity) {
+        this.title = title;
+        this.cost = cost;
+        this.expirationDate = expirationDate;
+        this.supplierEmail = supplierEmail;
+        this.quantity = quantity;
+    }
 }

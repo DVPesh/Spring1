@@ -5,7 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.peshekhonov.model.Visitor;
 import ru.peshekhonov.model.dto.VisitorDto;
 
-@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        uses = {CartDtoMapper.class})
 public interface VisitorDtoMapper {
 
     @Mapping(target = "password", ignore = true)

@@ -1,9 +1,12 @@
 package ru.peshekhonov.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,7 +22,7 @@ public class Visitor {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
     @Column(nullable = false, length = 1024)
@@ -31,7 +34,10 @@ public class Visitor {
             joinColumns = @JoinColumn(name = "visitor_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
+
+    @OneToMany(mappedBy = "visitor")
+    private List<Cart> carts;
 
     public Visitor(String username, String phoneNumber, String password) {
         this.username = username;
